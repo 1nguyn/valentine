@@ -1,0 +1,141 @@
+/* Thiết lập nền tối cho toàn trang */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #3d2b1f; /* Màu nâu đậm */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #f5ebe0;
+}
+
+/* Tìm đến class .card-container và sửa align-items */
+.card-container {
+    display: flex;
+    align-items: flex-start;
+    /* Giảm số này xuống, ví dụ từ 60px xuống 30px hoặc 40px */
+    padding: 30px 60px 60px 60px; /* Trên - Phải - Dưới - Trái */
+    
+    /* Các dòng khác giữ nguyên... */
+    position: relative;
+    background-color: #5d4037;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 800px;
+    width: 90%;
+}
+
+/* Hoặc nếu bạn muốn chính xác hơn cho phần chữ */
+.text-section {
+    flex: 1;
+    padding-right: 20px;
+    margin-top: 20px; /* Điều chỉnh con số này để nâng/hạ dòng text tùy ý */
+}
+
+.text-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #d7ccc8;
+}
+
+.text-section p {
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* 1. Khối bao quanh để cố định vị trí cả cụm ở góc trái */
+.duck-wrapper {
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    z-index: 15;
+    width: 150px;
+    height: 180px; /* Tăng chiều cao để chứa cả chữ phía trên */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* 2. Bong bóng lời thoại - ĐỨNG YÊN (vì không có animation) */
+.speech-bubble {
+    position: relative; /* Chuyển sang relative để nằm trên đầu vịt */
+    margin-bottom: 15px; /* Khoảng cách giữa chữ và vịt */
+    background-color: #f5ebe0;
+    color: #3d2b1f;
+    padding: 6px 15px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Đuôi của bong bóng */
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #f5ebe0;
+}
+
+/* 3. Khung chứa con vịt - CÓ ANIMATION NHÚN NHẢY */
+.duck-frame {
+    width: 120px;
+    height: 200px;
+    animation: duckBounce 2s ease-in-out infinite; /* Animation chỉ áp dụng tại đây */
+    transform-origin: bottom center;
+}
+
+.duck-frame img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+}
+
+/* Hiệu ứng nhún nhảy cho vịt */
+@keyframes duckBounce {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+    }
+    50% { 
+        transform: translateY(-12px) scale(1.02); 
+    }
+}
+/* Đảm bảo container có position relative để hoa bám theo */
+.card-container {
+    position: relative; /* Thêm dòng này vào class .card-container cũ */
+    /* ... các thuộc tính cũ giữ nguyên ... */
+}
+
+.frame {
+    width: 250px;
+    height: 350px;
+    border: 20px solid #a88f85; /* Màu viền khung */
+    background-color: #4e342e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Để ảnh tự lấp đầy khung mà không bị méo */
+}
+
+/* Chữ tạm thời khi chưa có ảnh */
+.placeholder-text {
+    color: #8d6e63;
+    text-align: center;
+    font-style: italic;
+}
