@@ -17,39 +17,433 @@
 <body>
 
 
-<div class="card-container">
-    <div class="duck-wrapper">
-        <div class="speech-bubble">Em Vịt thúi</div> <div class="duck-frame">
-            <img src="images/113.png" alt="Vịt Bư quạu"> </div>
-    </div>
 
+    <div class="card-container">
 
+        <div class="duck-wrapper" onclick="changeSlide()">
 
-        <div class="text-section">
+            <div class="speech-bubble" id="duck-label">Em Vịt thúi</div>
 
-            <h1>Há lu bé Bư của tui...</h1>
+            <div class="duck-frame">
 
-            <p>Ghi vài lời ngọt ngào ở đây nhé...</p>
+                <img src="images/duck1.png" alt="Vịt Bư" id="duck-img">
+
+            </div>
 
         </div>
 
 
 
-        <div class="image-frame">
+        <div class="text-section">
 
-    <div class="frame">
+            <div id="slide-1" class="content-slide">
 
-        <img src="images/att.UqG5CLMqK5AaFCuO-Pn80XJcvGH_JNDjKLdogDAb3wY.jpg" alt="Ảnh của bé Bư">
+                <h1>Há lu bé Bư của tui...</h1>
+
+                <p>Cũng đã được 1 khoảng thời gian đi cùng nhau rồi ha, </p>
+
+                <small>(Chạm vào con vịt để xem tiếp nè...)</small>
+
+            </div>
+
+
+
+            <div id="slide-2" class="content-slide" style="display: none;">
+
+                <h1>Bé Bư ơi... 💖</h1>
+
+                <p>Bà thấy tui vừa đổi hình không? 😂</p>
+
+                <p>Bấm thêm lần nữa để đọc tiếp tâm thư của tui nha!</p>
+
+            </div>
+
+
+
+            <div id="slide-3" class="content-slide" style="display: none;">
+
+                <h1>Tâm thư gửi bà... 💌</h1>
+
+                <div class="scroll-text">
+
+                    <p>Chúc bé Bư luôn xinh đẹp và hạnh phúc!</p>
+
+                    <p>Cảm ơn bà đã luôn ở bên cạnh tui...</p>
+
+                    <p>Valentine này tui hứa sẽ bớt làm bà quạu lại nhen.</p>
+
+                    </div>
+
+            </div>
+
+        </div>
+
+
+
+<div class="music-player">
+
+    <div class="music-info">
+
+        <marquee behavior="scroll" direction="left">The Marías - No One Noticed</marquee>
+
+    </div>
+
+   
+
+    <div class="player-layout">
+
+        <div class="album-art" id="album-disk">
+
+            <img src="images/image.png" alt="Music Cover">
+
+        </div>
+
+
+
+        <div class="music-controls">
+
+            <button class="ctrl-btn decoration">⏮</button>
+
+            <button id="play-pause-btn" class="ctrl-btn" onclick="toggleMusic()">⏸</button>
+
+            <button class="ctrl-btn decoration">⏭</button>
+
+        </div>
 
     </div>
 
 </div>
 
+
+
+<audio id="myAudio" loop>
+
+    <source src="mp3/The Marías - No One Noticed (slowed + reverb).mp3" type="audio/mpeg">
+
+</audio>
+
+
+
+
+
+
+
+        <div class="image-frame">
+
+            <div class="frame">
+
+                <img src="images/Nhu.jpg" alt="Bé Bư">
+
+            </div>
+
+        </div>
+
     </div>
 
 
 
+    <canvas id="particleCanvas"></canvas>
+
+
+
+
+
+    <script>
+
+
+
+        const canvas = document.getElementById('particleCanvas');
+
+const ctx = canvas.getContext('2d');
+
+
+
+canvas.width = window.innerWidth;
+
+canvas.height = window.innerHeight;
+
+
+
+let particlesArray = [];
+
+const numberOfParticles = 80; // Số lượng hạt vừa phải cho sang
+
+
+
+class Particle {
+
+    constructor() {
+
+        this.reset();
+
+    }
+
+    reset() {
+
+        this.x = Math.random() * canvas.width;
+
+        this.y = Math.random() * canvas.height - canvas.height;
+
+        this.size = Math.random() * 3 + 1; // Hạt to nhỏ ngẫu nhiên
+
+        this.speedY = Math.random() * 1 + 0.5; // Rơi chậm
+
+        this.speedX = Math.random() * 0.5 - 0.25; // Bay nhẹ sang ngang
+
+        this.color = 'rgba(245, 235, 224, 0.6)'; // Màu kem nhạt giống tone web
+
+    }
+
+    update() {
+
+        this.y += this.speedY;
+
+        this.x += this.speedX;
+
+        if (this.y > canvas.height) this.reset();
+
+    }
+
+    draw() {
+
+        ctx.fillStyle = this.color;
+
+        ctx.beginPath();
+
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+        ctx.fill();
+
+    }
+
+}
+
+
+
+function init() {
+
+    for (let i = 0; i < numberOfParticles; i++) {
+
+        particlesArray.push(new Particle());
+
+    }
+
+}
+
+
+
+function animate() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < particlesArray.length; i++) {
+
+        particlesArray[i].update();
+
+        particlesArray[i].draw();
+
+    }
+
+    requestAnimationFrame(animate);
+
+}
+
+
+
+window.addEventListener('resize', function() {
+
+    canvas.width = window.innerWidth;
+
+    canvas.height = window.innerHeight;
+
+});
+
+
+
+init();
+
+animate();
+
+    let currentStep = 1;
+
+
+
+    function toggleMusic() {
+
+    const audio = document.getElementById('myAudio');
+
+    const btn = document.getElementById('play-pause-btn');
+
+
+
+    if (audio.paused) {
+
+        audio.play();
+
+        btn.innerText = "⏸"; // Đổi icon sang Pause khi đang hát
+
+    } else {
+
+        audio.pause();
+
+        btn.innerText = "▶"; // Đổi icon sang Play khi dừng
+
+    }
+
+}
+
+
+
+function startEverything() {
+
+    const audio = document.getElementById('myAudio');
+
+    const disk = document.getElementById('album-disk');
+
+    const btn = document.getElementById('play-pause-btn');
+
+
+
+    // Nhảy thẳng đến đoạn 2 phút 07 giây
+
+    audio.currentTime = 127;
+
+
+
+    audio.play().then(() => {
+
+        // Cập nhật giao diện ngay lập tức khi nhạc kêu
+
+        btn.innerText = "⏸";
+
+        if (disk) disk.style.animationPlayState = "running";
+
+        console.log("Nhạc đang phát từ đoạn 2:07");
+
+    }).catch(error => {
+
+        console.log("Lỗi: Hãy chắc chắn file nhạc đã nằm trong thư mục mp3", error);
+
+    });
+
+
+
+    // Ẩn màn hình chờ
+
+    const overlay = document.getElementById('overlay');
+
+    overlay.style.opacity = '0';
+
+    setTimeout(() => {
+
+        overlay.style.display = 'none';
+
+    }, 500);
+
+}
+
+
+
+// Hàm này để bấm nút Pause/Play trên trình phát nhạc
+
+function toggleMusic() {
+
+    const audio = document.getElementById('myAudio');
+
+    const btn = document.getElementById('play-pause-btn');
+
+    const disk = document.getElementById('album-disk');
+
+
+
+    if (audio.paused) {
+
+        audio.play();
+
+        btn.innerText = "⏸";
+
+        if (disk) disk.style.animationPlayState = "running";
+
+    } else {
+
+        audio.pause();
+
+        btn.innerText = "▶";
+
+        if (disk) disk.style.animationPlayState = "paused";
+
+    }
+
+}
+
+
+
+    function changeSlide() {
+
+        const duckImg = document.getElementById('duck-img');
+
+        const duckLabel = document.getElementById('duck-label');
+
+
+
+        if (currentStep === 1) {
+
+            // Chuyển sang Slide 2
+
+            document.getElementById('slide-1').style.display = 'none';
+
+            document.getElementById('slide-2').style.display = 'block';
+
+            duckImg.src = "images/duck2.png"; // Đổi sang ảnh vịt 2
+
+            duckLabel.innerText = "sến vl??";
+
+            currentStep = 2;
+
+        } else if (currentStep === 2) {
+
+            // Chuyển sang Slide 3
+
+            document.getElementById('slide-2').style.display = 'none';
+
+            document.getElementById('slide-3').style.display = 'block';
+
+            duckImg.src = "images/duck3.png"; // Đổi sang ảnh vịt 3
+
+            duckLabel.innerText = "Vịt vui ròiii";
+
+            currentStep = 3;
+
+        }
+
+    }
+
+    </script>
+
+
+
+
+
+    <audio id="myAudio" loop>
+
+    <source src="images/valentine_song.mp3" type="audio/mpeg">
+
+</audio>
+
+
+
+<div id="overlay" onclick="startEverything()" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#3d2b1f; z-index:9999; display:flex; justify-content:center; align-items:center; cursor:pointer; color:#f5ebe0;">
+
+    <div class="overlay-content">
+
+        <p>Chạm vào đây để mở món quà của tui... 🎁</p>
+
+    </div>
+
+</div>
+
+ 
+
 </body>
 
 </html>
-
