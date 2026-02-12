@@ -125,9 +125,14 @@ body {
     align-items: center;
 
     justify-content: flex-end;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
 
 }
 
+.duck-wrapper:hover {
+    opacity: 0.2; /* Mờ hẳn đi khi chạm vào để đọc chữ bên dưới */
+}
 
 
 /* 2. Bong bóng lời thoại - ĐỨNG YÊN (vì không có animation) */
